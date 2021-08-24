@@ -1,0 +1,25 @@
+{
+  "name": "what-is-this-server",
+  "version": "0.9.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/khackskjs/what-is-this-server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/khackskjs/what-is-this-server/issues"
+  },
+  "homepage": "https://github.com/khackskjs/what-is-this-server#readme",
+  "dependencies": {
+    "cross-env": "^7.0.3",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1"
+  }
+}

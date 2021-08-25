@@ -18,8 +18,13 @@
   },
   "homepage": "https://github.com/khackskjs/what-is-this-server#readme",
   "dependencies": {
+    "@prisma/client": "^2.30.0",
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "npx": "^3.0.0",
+    "prisma": "^2.30.0"
   }
 }

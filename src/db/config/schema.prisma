@@ -8,7 +8,7 @@ datasource db {
 }
 
 model User {
-  uid             Int     @id @default(autoincrement())
+  uuid            Int     @id @default(autoincrement())
   email           String  @unique
   name            String?
   studyDateCount  Int?    @default(1)
@@ -21,8 +21,8 @@ model User {
 model CardGroup {
   guid        Int       @id @default(autoincrement())
   name        String
-  uid         Int
-  user        User      @relation(fields: [uid], references: [uid])
+  uuid        Int
+  user        User      @relation(fields: [uuid], references: [uuid])
   cards       Card[]
 
   createdAt   DateTime  @default(now())

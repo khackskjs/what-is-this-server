@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  uid             Int     @id @default(autoincrement())
+  email           String  @unique
+  name            String?
+  studyDateCount  Int?    @default(1)
+  cardGroups      CardGroup[]
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model CardGroup {
+  guid        Int       @id @default(autoincrement())
+  name        String
+  uid         Int
+  user        User      @relation(fields: [uid], references: [uid])
+  cards       Card[]
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Card {
+  cuid        Int       @id @default(autoincrement())
+  guid        Int?
+  text1       String
+  text2       String
+  cardGroup   CardGroup?    @relation(fields: [guid], references: [guid])
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}

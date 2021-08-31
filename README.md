@@ -18,3 +18,6 @@ Prisma 의 사용법은 다음과 같습니다.
 1. scheme.prisma 파일 작성 (이름 변경 시 package.json 에 지정 `prisma.schema: "./src/db/config/schema.prisma"`)
 1. prisma scheme 실행 시켜서 DB, Table 등 생성(migrate). npm script `npm run setting:migrate-db`
 1. `@prisma/client` 모듈을 통해 개발한다. (`./src/db/index.js` 참고)
+
+DB scheme 변경이 있을경우 Migration 을 위해서 `db:migrate` script 를 이용하면 됩니다.
+> `ex) npm run db:migrate 변경_내역_테이블_추가함`

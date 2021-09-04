@@ -1,3 +1,4 @@
+const { v4: uuidv4 } = require('uuid')
 
 class Card {
   get prisma() { return this._prisma }

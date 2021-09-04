@@ -6,6 +6,8 @@ const port = process.env.SERVER_PORT
 
 const cardRoute = require('./router/card.router')
 
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 app.use('/', (req, res, next) => {
   next()
 })

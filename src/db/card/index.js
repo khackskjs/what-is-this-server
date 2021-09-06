@@ -7,7 +7,13 @@ class Card {
     this._prisma = prisma
   }
 
-  readCard({ cuid }) {
+  async createCardGroup({ uuid, name }) {
+    return await this.prisma.cardGroup.create({
+      data: {
+        uuid, name
+      }
+    }).catch(err => { console.error('err', err); return { error: 'Failed to create card group' } })
+  }
     this.prisma.card.findUnique({
       where: {
         cuid
@@ -15,7 +21,6 @@ class Card {
     })
   }
 
-  readCardByGuid({ guid }) {
     this.prisma.card.findMany({
       where: {
         guid

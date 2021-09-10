@@ -3,10 +3,13 @@ const router = express.Router()
 const db = require('../db')
 
 router.post('/group', async (req, res) => {
-  const { name } = req.body
+  const { name, guid } = req.body
   const { uuid } = req
 
-  const result = await db.card.createCardGroup({ name, uuid })
+  const result = guid
+    ? await db.card.createCardGroup({ name, uuid })
+    : await db.card.updateCardGroup({ guid, name })
+
   res.json(result)
 })
 

@@ -15,6 +15,13 @@ class Card {
     }).catch(err => { console.error('err', err); return { error: 'Failed to create card group' } })
   }
 
+  updateCardGroup({ guid, name }) {
+    return this.prisma.cardGroup.update({
+      where: { guid },
+      data: { name }
+    })
+  }
+
   upsertCardList(cardList) {
     const modifyCardListPromises = cardList.filter(c => !!c.cuid).map(c => this.prisma.card.update({
       where: { cuid: c.cuid },

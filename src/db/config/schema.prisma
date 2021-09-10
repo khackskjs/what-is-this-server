@@ -30,12 +30,17 @@ model CardGroup {
 }
 
 model Card {
-  cuid        Int       @id @default(autoincrement())
-  guid        Int?
-  text1       String
-  text2       String
-  cardGroup   CardGroup?    @relation(fields: [guid], references: [guid])
+  cuid              Int       @id @default(autoincrement())
+  guid              Int?
+  text1             String
+  text2             String
+  reviewStage       Int       @default(0)   // [1, 2, 4, 8, 16, 32] 의 index 로 사용 할 것
+  lastReviewResult  Int       @default(0)   // NONE: 0,
+  dateOfReview      Int?
+  dateForNextReview Int       // 신규 카드 생성 시 studyDateCount 가 여기 들어오면 됨
 
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  cardGroup         CardGroup?    @relation(fields: [guid], references: [guid])
+
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
 }

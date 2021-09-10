@@ -12,22 +12,20 @@ router.post('/group', async (req, res) => {
 
 router.get('/group/list', async (req, res) => {
   const { uuid } = req
-  const cardList = db.card.selectCardGroupsByUuid({ uuid })
-  console.log('GET /group/list cardList:', cardList)
-  res.send(cardList)
+  const cardGroupList = await db.card.selectCardGroupsByUuid({ uuid })
+  res.json(cardGroupList)
 })
 
 router.post('/list', async (req, res) => {
-  const { uuid } = req
   const { cardList } = req.body
-
-  console.log('cardList', cardList)
   const result = await db.card.upsertCardList(cardList)
-  console.log('POST /group/list cardList:', result)
+  res.json(result)
 })
 
-router.get('/list', (req, res) => {
-  res.send(['Card List'])
+router.get('/list', async (req, res) => {
+  const { guid } = req.query
+  const cardList = await db.card.selectCardsByGuid({ guid })
+  res.json(cardList)
 })
 
 module.exports = router

@@ -7,26 +7,26 @@ class Card {
     this._prisma = prisma
   }
 
-  async createCardGroup({ uuid, name }) {
-    return await this.prisma.cardGroup.create({
+  createCardGroup({ uuid, name }) {
+    return this.prisma.cardGroup.create({
       data: {
         uuid, name
       }
     }).catch(err => { console.error('err', err); return { error: 'Failed to create card group' } })
   }
 
-  async upsertCardList(cardList) {
+  upsertCardList(cardList) {
     const modifyCardListPromises = cardList.filter(c => !!c.cuid).map(c => this.prisma.card.update({
       where: { cuid: c.cuid },
       data: c
     }))
 
     const newCardListPromises = cardList.filter(c => !c.cuid).map(c => this.prisma.card.create({ data: c }))
-    return await Promise.all([ ...modifyCardListPromises, ...newCardListPromises ])
+    return Promise.all([ ...modifyCardListPromises, ...newCardListPromises ])
   }
 
   selectCardGroupsByUuid({ uuid }) {
-    this.prisma.cardGroup.findMany({
+    return this.prisma.cardGroup.findMany({
       where: {
         uuid
       }
@@ -42,7 +42,7 @@ class Card {
   }
 
   selectCardsByGuid({ guid }) {
-    this.prisma.card.findMany({
+    return this.prisma.card.findMany({
       where: {
         guid
       }

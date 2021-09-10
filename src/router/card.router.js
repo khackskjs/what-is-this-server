@@ -23,7 +23,8 @@ router.post('/list', async (req, res) => {
 })
 
 router.get('/list', async (req, res) => {
-  const { guid } = req.query
+  let { guid } = req.query
+  guid = +guid
   const cardList = await db.card.selectCardsByGuid({ guid })
   res.json(cardList)
 })

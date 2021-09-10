@@ -8,7 +8,8 @@
     "environment:db-generate": "cross-env NODE_ENV=local npx prisma generate",
     "db:migrate": "npx dotenv -e .env.local -- npx prisma migrate dev --name",
     "setting": "npm-run-all setting:*",
-    "setting:migrate-db": "npx dotenv -e .env.local -- npx prisma migrate dev --name mariadb-init"
+    "setting:migrate-db": "npx dotenv -e .env.local -- npx prisma migrate dev --name mariadb-init",
+    "setting:seed-db": "npx dotenv -e .env.local -- node src/db/config/seed.js"
   },
   "repository": {
     "type": "git",

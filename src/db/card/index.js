@@ -22,6 +22,12 @@ class Card {
     })
   }
 
+  deleteCardGroup({ guid }) {
+    return this.prisma.cardGroup.delete({
+      where: { guid },
+    })
+  }
+
   upsertCardList(cardList) {
     const modifyCardListPromises = cardList.filter(c => !!c.cuid).map(c => this.prisma.card.update({
       where: { cuid: c.cuid },

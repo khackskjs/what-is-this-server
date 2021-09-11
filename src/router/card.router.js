@@ -7,9 +7,17 @@ router.post('/group', async (req, res) => {
   const { uuid } = req
 
   const result = guid
-    ? await db.card.createCardGroup({ name, uuid })
-    : await db.card.updateCardGroup({ guid, name })
+    ? await db.card.updateCardGroup({ guid, name })
+    : await db.card.createCardGroup({ name, uuid })
 
+  res.json(result)
+})
+
+router.delete('/group', async (req, res) => {
+  const { guid } = req.body
+  const { uuid } = req
+
+  const result = await db.card.deleteCardGroup({ guid })
   res.json(result)
 })
 

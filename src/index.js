@@ -4,7 +4,9 @@ const express = require('express')
 const app = express()
 const port = process.env.SERVER_PORT
 
-const { authChecker } = require('./auth')
+const { authChecker, GoogleAuth } = require('./auth')
+GoogleAuth.instance.initializeGoogleSetting(app)
+
 const cardRoute = require('./router/card.router')
 
 app.use(authChecker)

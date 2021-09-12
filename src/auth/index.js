@@ -48,7 +48,7 @@ class GoogleAuth {
     // 로그인이 최초로 성공했을 때 호출 됨
     // done(null, user.id) 로 세션을 초기화 한다
     passport.serializeUser(function (user, done) {
-      console.log('passport.serializeUser')
+      console.log('passport.serializeUser', user.id)
       done(null, user.id)
     })
 
@@ -67,8 +67,8 @@ class GoogleAuth {
           passReqToCallback: true,
         },
         function (request, accessToken, refreshToken, profile, done) {
-          console.log('profile', profile)
-          console.log('accessToken', accessToken)
+          // console.log('profile', profile)
+          // console.log('accessToken', accessToken)
 
           return done(null, profile)
         }
@@ -78,9 +78,17 @@ class GoogleAuth {
     app.get('/auth/google', passport.authenticate('google', { scope: ['email', 'profile'] }))
 
     app.get('/auth/google/callback', passport.authenticate('google', {
-      successRedirect: '/card-management',
-      failureRedirect: '/error',
+      successRedirect: 'http://localhost:8080/',
+      failureRedirect: 'http://localhost:8080/login',
     }))
+
+    app.get('/logout', (req, res) => {
+      req.logout()
+      req.session.save(err => {
+        if (err) throw err
+        res.end()
+      })
+    })
   }
 }
 

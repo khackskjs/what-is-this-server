@@ -4,13 +4,13 @@ const express = require('express')
 const app = express()
 const port = process.env.SERVER_PORT
 const cors = require('cors')
+const { authChecker, GoogleAuth } = require('./auth')
 
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-const { authChecker, GoogleAuth } = require('./auth')
-
+app.use(authChecker)
 app.use('/', (req, res, next) => {
   const param = req.method === 'POST' ? req.body : req.query
   console.log(`${req.method} ${req.url}`, param)
@@ -19,7 +19,7 @@ app.use('/', (req, res, next) => {
 
 GoogleAuth.instance.initializeGoogleSetting(app)
 
-app.use(authChecker)
+
 const cardRoute = require('./router/card.router')
 const userRoute = require('./router/user.router')
 

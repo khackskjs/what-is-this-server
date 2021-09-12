@@ -1,3 +1,4 @@
+const jwtDecode = require('jwt-decode')
 const session = require('express-session')
 const MySQLStore = require('express-mysql-session')(session)
 
@@ -16,7 +17,6 @@ const options = {
 }
 
 const sessionStore = new MySQLStore(options)
-
 
 class GoogleAuth {
   constructor(enforcer) {
@@ -95,6 +95,14 @@ class GoogleAuth {
 
 function authChecker(req, res, next) {
   if (req.headers.authorization) {
+    const [_, token] = req.headers.authorization.split('Bearer ')
+    const userInfo = jwtDecode(token)
+    req.user = {
+      email: userInfo.email
+    }
+    req.uuid = 1
+    // uuid 는 DB로 획득하고 캐시하는게 낫것지?
+
   } else {
     req.uuid = 1  // temp code
     next()

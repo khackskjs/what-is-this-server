@@ -4,6 +4,7 @@ const MySQLStore = require('express-mysql-session')(session)
 
 const passport = require('passport')
 const GoogleStrategy = require('passport-google-oauth2').Strategy
+const db = require('../db')
 
 const singleton = Symbol()
 const singletonEnforcer = Symbol()
@@ -97,16 +98,20 @@ function authChecker(req, res, next) {
   if (req.headers.authorization) {
     const [_, token] = req.headers.authorization.split('Bearer ')
     const userInfo = jwtDecode(token)
-    req.user = {
-      email: userInfo.email
-    }
-    req.uuid = 1
-    // uuid 는 DB로 획득하고 캐시하는게 낫것지?
+    const email = userInfo.email
+
+    // TODO uuid 는 cache
+    db.user.getUser({ email }).then(user => {
+      req.user = { email }
+      if (user) {
+        req.user.uuid = user.uuid
+      }
+
+      next()
+    })
 
   } else {
-    req.uuid = 1  // temp code
-    next()
-    // res.status(401).json({ error: 'Unauthorized' })
+    res.status(401).json({ error: 'Unauthorized' })
   }
 }
 

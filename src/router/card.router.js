@@ -4,7 +4,7 @@ const db = require('../db')
 
 router.post('/group', async (req, res) => {
   const { name, guid } = req.body
-  const { uuid } = req
+  const { uuid } = req.user
 
   const result = guid
     ? await db.card.updateCardGroup({ guid, name })
@@ -15,20 +15,21 @@ router.post('/group', async (req, res) => {
 
 router.delete('/group', async (req, res) => {
   const { guid } = req.body
-  const { uuid } = req
+  const { uuid } = req.user
 
   const result = await db.card.deleteCardGroup({ guid })
   res.json(result)
 })
 
 router.get('/group/list', async (req, res) => {
-  const { uuid } = req
+  const { uuid } = req.user
   const cardGroupList = await db.card.selectCardGroupsByUuid({ uuid })
   res.json(cardGroupList)
 })
 
 router.post('/list', async (req, res) => {
   const { cardList } = req.body
+  const { uuid } = req.user
   const result = await db.card.upsertCardList(cardList)
   res.json(result)
 })

@@ -30,6 +30,8 @@ router.get('/group/list', async (req, res) => {
 router.post('/list', async (req, res) => {
   const { cardList } = req.body
   const { uuid } = req.user
+  cardList.forEach(card => card.uuid = uuid)
+  
   const result = await db.card.upsertCardList(cardList)
   res.json(result)
 })

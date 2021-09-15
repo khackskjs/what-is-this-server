@@ -62,10 +62,10 @@ class Card {
     })
   }
 
-  createCard({ email, guid, text1, text2 }) {
+  createCard({ uuid, email, guid, text1, text2 }) {
     this.prisma.card.create({
       data: {
-        email, guid, text1, text2
+        uuid, email, guid, text1, text2
       }
     })
   }

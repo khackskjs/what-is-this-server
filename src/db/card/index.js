@@ -61,6 +61,17 @@ class Card {
       }
     })
   }
+  
+  selectCardsByUuidAndDateOfReview({ uuid, dateOfReview }) {
+    return this.prisma.card.findMany({
+      where: {
+        uuid,
+        dateForNextReview: {
+          gte: dateOfReview
+        }
+      }
+    })
+  }
 
   createCard({ uuid, email, guid, text1, text2 }) {
     this.prisma.card.create({

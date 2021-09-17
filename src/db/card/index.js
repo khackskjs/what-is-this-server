@@ -67,7 +67,7 @@ class Card {
       where: {
         uuid,
         dateForNextReview: {
-          gte: dateOfReview
+          lte: dateOfReview
         }
       }
     })

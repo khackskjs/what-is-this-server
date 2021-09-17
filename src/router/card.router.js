@@ -43,13 +43,18 @@ router.get('/list', async (req, res) => {
   res.json(cardList)
 })
 
+router.post('/review', async (req, res) => {
+  const card = await db.card.reviewCard(req.body)
+  res.json(card)
+})
+
 router.get('/review/list', async (req, res) => {
   let { dateOfReview } = req.query
   const { uuid } = req.user
   dateOfReview = +dateOfReview
 
   const cardList = await db.card.selectCardsByUuidAndDateOfReview({ uuid, dateOfReview })
-  console.log('cardList', cardList)
+  console.log(`cardList[${cardList.length}]`)
   res.json(cardList)
 })
 

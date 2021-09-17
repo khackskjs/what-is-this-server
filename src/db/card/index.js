@@ -47,7 +47,7 @@ class Card {
   }
 
   selectCard({ cuid }) {
-    this.prisma.card.findUnique({
+    return this.prisma.card.findUnique({
       where: {
         cuid
       }
@@ -74,7 +74,7 @@ class Card {
   }
 
   createCard({ uuid, email, guid, text1, text2 }) {
-    this.prisma.card.create({
+    return this.prisma.card.create({
       data: {
         uuid, email, guid, text1, text2
       }
@@ -83,13 +83,20 @@ class Card {
 
   // Card 의 Group 은 바꿀 수 없음
   updateCard({ cuid, text1, text2 }) {
-    this.prisma.card.update({
+    return this.prisma.card.update({
       where: {
         cuid
       },
       data: {
         text1, text2
       }
+    })
+  }
+
+  reviewCard({ cuid, lastReviewResult, dateOfReview }) {
+    return this.prisma.card.update({
+      where: { cuid },
+      data: { lastReviewResult, dateOfReview }
     })
   }
 }

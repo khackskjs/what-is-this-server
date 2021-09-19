@@ -38,11 +38,14 @@ class Card {
     return Promise.all([ ...modifyCardListPromises, ...newCardListPromises ])
   }
 
-  selectCardGroupsByUuid({ uuid }) {
-    return this.prisma.cardGroup.findMany({
-      where: {
-        uuid
-      }
+  selectCardGroupsByUuid({ uuid, guidList }) {
+    const where = { uuid }
+    if (guidList) {
+      where['guid'] = { in: guidList }
+    }
+
+    return this.prisma.cardGroup.findMany({ 
+      where
     })
   }
 

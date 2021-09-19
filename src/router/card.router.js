@@ -23,7 +23,13 @@ router.delete('/group', async (req, res) => {
 
 router.get('/group/list', async (req, res) => {
   const { uuid } = req.user
-  const cardGroupList = await db.card.selectCardGroupsByUuid({ uuid })
+  const { guidList } = req.query
+
+  if (!Array.isArray(guidList)) {
+    return res.status(400).end()
+  }
+
+  const cardGroupList = await db.card.selectCardGroupsByUuid({ uuid, guidList: guidList.map(g => +g) })
   res.json(cardGroupList)
 })
 

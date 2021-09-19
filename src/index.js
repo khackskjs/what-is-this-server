@@ -26,13 +26,9 @@ const userRoute = require('./router/user.router')
 app.use('/card', cardRoute)
 app.use('/user', userRoute)
 
-// response method
-// https://expressjs.com/en/guide/routing.html
-
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
 
-
-const { reviewService } = require('./service')
-reviewService.calculateReviewCards()
+// const { reviewService } = require('./service')
+// reviewService.calculateReviewCards()

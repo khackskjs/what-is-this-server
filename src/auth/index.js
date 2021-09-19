@@ -5,6 +5,7 @@ const MySQLStore = require('express-mysql-session')(session)
 const passport = require('passport')
 const GoogleStrategy = require('passport-google-oauth2').Strategy
 const db = require('../db')
+const { cacheService } = require('../service')
 
 const singleton = Symbol()
 const singletonEnforcer = Symbol()
@@ -100,11 +101,16 @@ function authChecker(req, res, next) {
     const userInfo = jwtDecode(token)
     const email = userInfo.email
 
-    // TODO uuid 는 cache
+    const user = cacheService.getUuidByEmail(email)
+    if (user) {
+      req.user = user
+      return next()
+    }
+    
     db.user.getUser({ email }).then(user => {
-      req.user = { email }
       if (user) {
-        req.user.uuid = user.uuid
+        cacheService.setUser(user)
+        req.user = user
       }
 
       next()

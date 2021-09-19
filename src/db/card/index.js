@@ -73,6 +73,16 @@ class Card {
     })
   }
 
+  selectCardsByForReview() {
+    return this.prisma.card.findMany({
+      where: {
+        lastReviewResult: {
+          not: 0,
+        }
+      }
+    })
+  }
+
   createCard({ uuid, email, guid, text1, text2 }) {
     return this.prisma.card.create({
       data: {
@@ -93,6 +103,25 @@ class Card {
     })
   }
 
+  updateCardReviewResults(cardList) {
+    const promises = cardList.map(card => this.prisma.card.update({
+      where: { cuid: card.cuid },
+      data: {
+        lastReviewResult: card.lastReviewResult,
+        reviewStage: card.reviewStage,
+        dateForNextReview: card.dateForNextReview,
+      }
+    }))
+
+    return Promise.all(promises)
+  }
+
+  /**
+   *  카드 하나를 리뷰(성공/실패) 합니다.
+   * 
+   * @param {Object} params 
+   * @returns 
+   */
   reviewCard({ cuid, lastReviewResult, dateOfReview }) {
     return this.prisma.card.update({
       where: { cuid },

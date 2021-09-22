@@ -76,7 +76,7 @@ class Card {
     })
   }
 
-  selectCardsByForReview() {
+  selectCardsForReview() {
     return this.prisma.card.findMany({
       where: {
         lastReviewResult: {

@@ -15,7 +15,7 @@ module.exports = class ReviewService {
   constructor() {}
 
   async calculateReviewCards() {
-    const cardList = await cardDbService.selectCardsByForReview()
+    const cardList = await cardDbService.selectCardsForReview()
     cardList.forEach(this._calculateNextReviewDate)
     await cardDbService.updateCardReviewResults(cardList)
   }

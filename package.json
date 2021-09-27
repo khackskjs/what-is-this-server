@@ -6,7 +6,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=local nodemon ./src/index.js",
     "start-prod": "cross-env NODE_ENV=local node ./src/index.js",
-    "environment:db-generate": "cross-env NODE_ENV=local npx prisma generate",
+    "environment:db-generate": "cross-env NODE_ENV=local prisma generate",
     "db:migrate": "npx dotenv -e .env.local -- npx prisma migrate dev --name",
     "setting": "npm-run-all setting:*",
     "setting:migrate-db": "npx dotenv -e .env.local -- npx prisma migrate dev --name mariadb-init",
@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/khackskjs/what-is-this-server#readme",
   "dependencies": {
-    "@prisma/client": "^2.30.0",
+    "@prisma/client": "^3.1.1",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
@@ -42,7 +42,7 @@
     "dotenv-cli": "^4.0.0",
     "nodemon": "^2.0.12",
     "npx": "^3.0.0",
-    "prisma": "^2.30.0"
+    "prisma": "^3.1.1"
   },
   "prisma": {
     "schema": "./src/db/config/schema.prisma"

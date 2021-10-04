@@ -7,8 +7,8 @@ router.post('/group', async (req, res) => {
   const { uuid } = req.user
 
   const result = guid
-    ? await db.card.updateCardGroup({ guid, name })
-    : await db.card.createCardGroup({ name, uuid })
+    ? await db.cardGroup.updateCardGroup({ guid, name })
+    : await db.cardGroup.createCardGroup({ name, uuid })
 
   res.json(result)
 })
@@ -17,7 +17,7 @@ router.delete('/group', async (req, res) => {
   const { guid } = req.body
   const { uuid } = req.user
 
-  const result = await db.card.deleteCardGroup({ guid })
+  const result = await db.cardGroup.deleteCardGroup({ guid })
   res.json(result)
 })
 
@@ -29,7 +29,7 @@ router.get('/group/list', async (req, res) => {
     guidList = guidList.split(',').map(g => +g)
   }
 
-  const cardGroupList = await db.card.selectCardGroupsByUuid({ uuid, guidList })
+  const cardGroupList = await db.cardGroup.selectCardGroupsByUuid({ uuid, guidList })
   res.json(cardGroupList)
 })
 

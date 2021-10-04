@@ -7,5 +7,5 @@ const CardGroup = require('./card-group')
 module.exports = {
   user: new User(db.User),
   card: new Card(db.Card),
-  CardGroup: new CardGroup(db.CardGroup),
+  cardGroup: new CardGroup(db.CardGroup),
 }

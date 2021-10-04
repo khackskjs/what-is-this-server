@@ -1,13 +1,13 @@
-const Prisma = require('@prisma/client')
-const prisma = new Prisma.PrismaClient()
+const sequelizeModel = require('./index.sequelize')
+const prismaModel = require('./index.prisma')
+
+const Model = process.env.ORM_TYPE === 'sequelize' ? sequelizeModel
+  : process.env.ORM_TYPE === 'prisma' ? prismaModel
+  : {}
 
 const DB_CONSTANTS = require('./constants')
 
-const Card = require('./card')
-const User = require('./user')
-
 module.exports = {
-  card: new Card(prisma),
-  user: new User(prisma),
-  DB_CONSTANTS,
+  ...Model,
+  DB_CONSTANTS
 }

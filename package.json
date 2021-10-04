@@ -4,12 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "test": "cross-env NODE_ENV=local node src/test.js",
     "start": "cross-env NODE_ENV=local nodemon ./src/index.js",
     "start-prod": "cross-env NODE_ENV=local node ./src/index.js",
     "environment:db-generate": "cross-env NODE_ENV=local prisma generate",
-    "db:migrate": "npx dotenv -e .env.local -- npx prisma migrate dev --name",
+    "db:migrate-prisma": "npx dotenv -e .env.local -- npx prisma migrate dev --name",
     "setting": "npm-run-all setting:*",
-    "setting:migrate-db": "npx dotenv -e .env.local -- npx prisma migrate dev --name mariadb-init",
+    "setting:db-init": "run-s setting:db-create setting:table-create",
+    "setting:db-create": "cross-env NODE_ENV=local node src/db/config/init-db.sequelize.js",
+    "setting:table-create": "cross-env NODE_ENV=local node src/db/config/init-tbl.sequelize.js",
+    "setting:db-migrate:sequelize": "sequelize db:migrate",
+    "setting:db-migrate:prisma": "npx dotenv -e .env.local -- npx prisma migrate dev --name mariadb-init",
     "setting:seed-db": "npx dotenv -e .env.local -- node src/db/config/seed.js"
   },
   "repository": {
@@ -32,16 +37,20 @@
     "express-mysql-session": "^2.1.7",
     "express-session": "^1.17.2",
     "jwt-decode": "^3.1.2",
+    "mariadb": "^2.5.4",
+    "mysql2": "^2.3.0",
     "node-cron": "^3.0.0",
     "npm-run-all": "^4.1.5",
     "passport": "^0.4.1",
     "passport-google-oauth2": "^0.2.0",
+    "sequelize": "^6.6.5",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@types/sequelize": "^4.28.10",
     "dotenv-cli": "^4.0.0",
     "nodemon": "^2.0.12",
-    "npx": "^3.0.0",
+    "npx": "^10.2.2",
     "prisma": "^3.1.1"
   },
   "prisma": {

@@ -1,32 +1,8 @@
+const sequelizeModel = require('./user.sequelize')
+const prismaModel = require('./user.prisma')
 
-class User {
-  constructor(prisma) {
-    this._prisma = prisma
-  }
+const model = process.env.ORM_TYPE === 'sequelize' ? sequelizeModel
+  : process.env.ORM_TYPE === 'prisma' ? prismaModel
+  : {}
 
-  get prisma() { return this._prisma }
-
-  createUser({ email, name } = {}) {
-    return this.prisma.user.create({
-      data: {
-        email, name,
-        studyDateCount: 1,
-      }
-    })
-  }
-
-  updateUser(user) {
-    return this.prisma.user.update({
-      where: { email: user.email },
-      data: user,
-    })
-  }
-
-  getUser({ email }) {
-    return this.prisma.user.findUnique({
-      where: { email }
-    })
-  }
-}
-
-module.exports = User
+module.exports = model

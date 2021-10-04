@@ -28,16 +28,6 @@ module.exports = class Card {
     })
   }
 
-  upsertCardList(cardList) {
-    const modifyCardListPromises = cardList.filter(c => !!c.cuid).map(c => this.prisma.card.update({
-      where: { cuid: c.cuid },
-      data: c
-    }))
-
-    const newCardListPromises = cardList.filter(c => !c.cuid).map(c => this.prisma.card.create({ data: c }))
-    return Promise.all([ ...modifyCardListPromises, ...newCardListPromises ])
-  }
-
   selectCardGroupsByUuid({ uuid, guidList }) {
     const where = { uuid }
     if (guidList) {
@@ -47,6 +37,16 @@ module.exports = class Card {
     return this.prisma.cardGroup.findMany({ 
       where
     })
+  }
+
+  upsertCardList(cardList) {
+    const modifyCardListPromises = cardList.filter(c => !!c.cuid).map(c => this.prisma.card.update({
+      where: { cuid: c.cuid },
+      data: c
+    }))
+
+    const newCardListPromises = cardList.filter(c => !c.cuid).map(c => this.prisma.card.create({ data: c }))
+    return Promise.all([ ...modifyCardListPromises, ...newCardListPromises ])
   }
 
   selectCard({ cuid }) {

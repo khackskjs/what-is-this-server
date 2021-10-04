@@ -15,7 +15,7 @@ module.exports = class User {
 
   updateUser(user) {
     return this.dbUser.update(
-      { user },
+      { ...user },
       {
         where: { email: user.email },
       })

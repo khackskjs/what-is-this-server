@@ -101,7 +101,7 @@ function authChecker(req, res, next) {
     const userInfo = jwtDecode(token)
     const email = userInfo.email
 
-    const user = cacheService.getUuidByEmail(email)
+    const user = cacheService.getUser(email)
     if (user) {
       req.user = user
       return next()

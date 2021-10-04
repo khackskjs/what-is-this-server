@@ -14,11 +14,11 @@ module.exports = class User {
   }
 
   updateUser(user) {
+    const where = { email: user.email }
     return this.dbUser.update(
-      { ...user },
-      {
-        where: { email: user.email },
-      })
+        { ...user },
+        { where }
+      ).then(async() => await this.dbUser.findOne({ where }))
   }
 
   getUser({ email }) {

@@ -8,4 +8,6 @@ const task = cron.schedule('0 0 0 * * *', async () => {
   await reviewService.calculateReviewCards()
 })
 
+console.log('[scheduler] started')
+
 task.start()

@@ -6,6 +6,9 @@ module.exports = class CacheService {
   setUser(email, user) {
     cache[email] = user
   }
+  getUser(email) {
+    return cache[email]
+  }
   getUuidByEmail(email) {
     return (cache[email] || {}).uuid
   }

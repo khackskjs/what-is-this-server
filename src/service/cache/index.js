@@ -9,7 +9,4 @@ module.exports = class CacheService {
   getUser(email) {
     return cache[email]
   }
-  getUuidByEmail(email) {
-    return (cache[email] || {}).uuid
-  }
 }

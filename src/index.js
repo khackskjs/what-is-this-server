@@ -1,4 +1,5 @@
 require('./config/environment')
+require('./scheduler')
 
 const express = require('express')
 const app = express()

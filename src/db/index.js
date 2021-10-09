@@ -1,8 +1,5 @@
-const sequelizeModel = require('./index.sequelize')
-const prismaModel = require('./index.prisma')
-
-const Model = process.env.ORM_TYPE === 'sequelize' ? sequelizeModel
-  : process.env.ORM_TYPE === 'prisma' ? prismaModel
+const Model = process.env.ORM_TYPE === 'sequelize' ? require('./index.sequelize')
+  : process.env.ORM_TYPE === 'prisma' ? require('./index.prisma')
   : {}
 
 const DB_CONSTANTS = require('./constants')

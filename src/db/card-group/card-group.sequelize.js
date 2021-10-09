@@ -12,11 +12,11 @@ module.exports = class CardGroup {
   }
 
   updateCardGroup({ guid, name }) {
+    const where = { guid }
     return this.dbCardGroup.update(
-      { name },
-      {
-        where: { guid },
-      })
+        { name },
+        { where }
+      ).then(async() => await this.dbCardGroup.findOne({ where }))
   }
 
   deleteCardGroup({ guid }) {

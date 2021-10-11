@@ -81,6 +81,12 @@ module.exports = class Card {
     return Promise.all(promises)
   }
 
+  deleteCardsByGuid({ guid }) {
+    return this.dbCard.destroy({
+      where: { guid },
+    })
+  }
+
   /**
    *  카드 하나를 리뷰(성공/실패) 합니다.
    * 

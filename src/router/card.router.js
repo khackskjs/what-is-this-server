@@ -15,9 +15,11 @@ router.post('/group', async (req, res) => {
 
 router.delete('/group', async (req, res) => {
   const { guid } = req.body
-  const { uuid } = req.user
 
-  const result = await db.cardGroup.deleteCardGroup({ guid })
+  let result = await db.cardGroup.deleteCardGroup({ guid })
+  if (result) {
+    result = await db.card.deleteCardsByGuid({ guid })
+  }
   res.json(result)
 })
 

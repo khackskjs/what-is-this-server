@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const db = require('../db')
+const { cacheService } = require('../service')
 
 router.post('/', async (req, res) => {
   const { email, name, } = req.body
@@ -15,6 +16,7 @@ router.post('/', async (req, res) => {
       user.studyDateCount++
     }
     user = await db.user.updateUser({ email: user.email, studyDateCount: user.studyDateCount })
+    cacheService.setUser(user)
   }
 
   res.json(user)

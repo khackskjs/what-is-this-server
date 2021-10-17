@@ -1,3 +1,5 @@
+const Op = require('sequelize').Op
+
 module.exports = class CardGroup {
   constructor(cardGroup) {
     this._cardGroup = cardGroup
@@ -28,7 +30,7 @@ module.exports = class CardGroup {
   selectCardGroupsByUuid({ uuid, guidList }) {
     const where = { uuid }
     if (guidList) {
-      where['guid'] = { in: guidList }
+      where['guid'] = { [Op.in]: guidList }
     }
 
     return this.dbCardGroup.findAll({ 
